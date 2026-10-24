@@ -1,0 +1,148 @@
+ 
+:root {
+    color-scheme: dark;
+    font-family: Inter, "Segoe UI", sans-serif;
+    background: #0b1120;
+    color: #e5e7eb;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at top, #172554, #0b1120 60%);
+}
+
+.container {
+    width: min(100% - 32px, 1000px);
+    margin: 0 auto;
+    padding: 56px 0 32px;
+}
+
+header {
+    margin-bottom: 32px;
+}
+
+.eyebrow {
+    color: #60a5fa;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+}
+
+h1 {
+    margin: 12px 0;
+    font-size: clamp(2rem, 5vw, 3.3rem);
+    letter-spacing: -0.04em;
+}
+
+.subtitle,
+.hint,
+footer {
+    color: #94a3b8;
+    line-height: 1.7;
+}
+
+.panel {
+    margin: 20px 0;
+    padding: 24px;
+    border: 1px solid #29364d;
+    border-radius: 18px;
+    background: rgb(15 23 42 / 88%);
+    box-shadow: 0 16px 40px rgb(0 0 0 / 15%);
+}
+
+h2 {
+    margin-top: 0;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin: 24px 0;
+}
+
+label {
+    display: grid;
+    gap: 7px;
+    color: #cbd5e1;
+    font-size: 0.85rem;
+}
+
+input {
+    width: 100%;
+    min-width: 0;
+    padding: 11px;
+    border: 1px solid #334155;
+    border-radius: 9px;
+    outline: none;
+    background: #0b1220;
+    color: #f8fafc;
+}
+
+input:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 3px rgb(96 165 250 / 15%);
+}
+
+button {
+    width: 100%;
+    padding: 14px 18px;
+    border: 0;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.result strong {
+    color: #93c5fd;
+}
+
+.error {
+    padding: 14px;
+    border: 1px solid #7f1d1d;
+    border-radius: 10px;
+    background: #450a0a;
+    color: #fecaca;
+    overflow-wrap: anywhere;
+}
+
+.hidden {
+    display: none;
+}
+
+footer {
+    margin-top: 28px;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+@media (max-width: 650px) {
+    .container {
+        padding-top: 32px;
+    }
+
+    .panel {
+        padding: 18px;
+    }
+
+    .feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

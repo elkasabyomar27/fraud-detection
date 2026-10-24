@@ -1,0 +1,22 @@
+CREDIT CARD FRAUD DETECTION — EVALUATION SUMMARY
+====================================================
+
+Selected model: Logistic Regression
+Selected threshold: 0.982
+Threshold selected using validation data only.
+
+Illustrative cost assumptions:
+Missed fraud (FN): $1,000
+False positive (FP): $25
+True positive / true negative incremental cost: $0
+
+Final held-out test results:
+Precision: 0.5135135135135135
+Recall: 0.8028169014084507
+F1: 0.6263736263736264
+Average Precision: 0.631636474926208
+TP: 57
+FP: 54
+FN: 14
+TN: 42434
+Estimated Cost ($): 15350

@@ -1,0 +1,3 @@
+Model,Best Threshold,TP,FP,FN,Recall,Precision,Minimum Validation Cost ($)
+Logistic Regression,0.982,62,68,9,0.8732394366197183,0.47692307692307695,10700
+Decision Tree,0.998,60,49,11,0.8450704225352113,0.5504587155963303,12225

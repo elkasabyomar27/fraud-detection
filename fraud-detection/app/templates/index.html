@@ -1,0 +1,123 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Detection</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <main class="container">
+        <header>
+            <p class="eyebrow">MACHINE LEARNING PROJECT</p>
+            <h1>Credit Card Fraud Detection</h1>
+            <p class="subtitle">Analyze a transaction and identify cases that may need review.</p>
+        </header>
+
+        <section class="panel">
+            <h2>Transaction features</h2>
+            <p class="hint">Enter the 30 model features. V1–V28 are PCA-transformed features.</p>
+
+            <form id="prediction-form">
+                <div id="feature-fields" class="feature-grid"></div>
+                <button id="submit-button" type="submit">Analyze transaction</button>
+            </form>
+        </section>
+
+        <section id="result" class="panel result hidden" aria-live="polite">
+            <p class="eyebrow">PREDICTION RESULT</p>
+            <h2 id="prediction-label">—</h2>
+            <p>Fraud probability: <strong id="probability">—</strong></p>
+            <p>Review required: <strong id="review-flag">—</strong></p>
+            <p>Decision threshold: <strong id="threshold">—</strong></p>
+        </section>
+
+        <p id="error-message" class="error hidden" role="alert"></p>
+        <footer>Prototype for educational demonstration. Predictions are not proof of fraud.</footer>
+    </main>
+
+    <script>
+        const features = [
+            "Time",
+            ...Array.from({ length: 28 }, (_, i) => `V${i + 1}`),
+            "Amount"
+        ];
+
+        const fields = document.getElementById("feature-fields");
+
+        for (const feature of features) {
+            const label = document.createElement("label");
+            label.textContent = feature;
+
+            const input = document.createElement("input");
+            input.type = "number";
+            input.name = feature;
+            input.step = "any";
+            input.required = true;
+            input.value = "0";
+
+            if (feature === "Time" || feature === "Amount") {
+                input.min = "0";
+            }
+
+            label.appendChild(input);
+            fields.appendChild(label);
+        }
+
+        const form = document.getElementById("prediction-form");
+        const button = document.getElementById("submit-button");
+        const result = document.getElementById("result");
+        const error = document.getElementById("error-message");
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            result.classList.add("hidden");
+            error.classList.add("hidden");
+            button.disabled = true;
+            button.textContent = "Analyzing...";
+
+            const payload = Object.fromEntries(
+                new FormData(form).entries()
+            );
+
+            for (const key of Object.keys(payload)) {
+                payload[key] = Number(payload[key]);
+            }
+
+            try {
+                const response = await fetch("/predict", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.detail
+                        ? JSON.stringify(data.detail)
+                        : "The prediction request failed.");
+                }
+
+                document.getElementById("prediction-label").textContent =
+                    data.predicted_label.toUpperCase();
+                document.getElementById("probability").textContent =
+                    (data.fraud_probability * 100).toFixed(2) + "%";
+                document.getElementById("review-flag").textContent =
+                    data.review_flag ? "Yes" : "No";
+                document.getElementById("threshold").textContent =
+                    data.threshold;
+
+                result.classList.remove("hidden");
+            } catch (err) {
+                error.textContent = err.message;
+                error.classList.remove("hidden");
+            } finally {
+                button.disabled = false;
+                button.textContent = "Analyze transaction";
+            }
+        });
+    </script>
+</body>
+</html>

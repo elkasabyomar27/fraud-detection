@@ -1,0 +1,2 @@
+Model,Threshold,Precision,Recall,F1,Average Precision,TP,FP,FN,TN,Estimated Cost ($)
+Logistic Regression,0.982,0.5135135135135135,0.8028169014084507,0.6263736263736264,0.631636474926208,57,54,14,42434,15350
